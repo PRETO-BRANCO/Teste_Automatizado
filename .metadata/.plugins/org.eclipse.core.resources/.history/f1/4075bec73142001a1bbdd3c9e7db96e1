@@ -121,7 +121,6 @@ public class TipoRisco {
 		//Salvar
 		WebElement btSalvar = driver.findElement(By.xpath("//html/body/app-root/app-aplicacao/apls-gestao-home-riscos-raiz/main/apls-cadastro/footer/div[3]/button[2]"));
 		btSalvar.click();
-		System.out.println("Daleee");
 		
 		WebElement message = driver.findElement(By.xpath("//* [contains(@class,'toast-message')]"));
 		String message2 = message.getAttribute("aria-label");
