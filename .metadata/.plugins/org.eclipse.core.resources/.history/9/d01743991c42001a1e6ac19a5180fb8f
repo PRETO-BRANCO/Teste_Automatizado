@@ -1,0 +1,51 @@
+package TestePreto;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+public class Login {
+	private WebDriver driver;
+	private WebDriverWait wdw;	
+	private Signal horizon;
+	private String endereco;
+	private Long starttime;
+	static String login;
+	static String senha;
+	
+	public Login(WebDriver driver, WebDriverWait wdw, Signal horizon, Long starttime, String endereco, String login, String senha) {
+		this.driver = driver;
+		this.wdw = wdw;
+		this.horizon = horizon;
+		this.endereco = endereco;
+		this.starttime = starttime;
+		this.login = login;
+		this.senha = senha;
+	}
+
+public String Logar() {
+	driver.get("https://"+ endereco +".apollusehs.com.br/apollus/login.html");
+	this.horizon.waitLoad();
+	WebElement login = driver.findElement(By.xpath("//*[@id='modalLogin']/div/div/div/div/div[1]/div/div[2]/form/div[1]/div[1]/input"));
+	login.sendKeys(this.login);
+	WebElement senha = driver.findElement(By.xpath("//*[@id='modalLogin']/div/div/div/div/div[1]/div/div[2]/form/div[1]/div[2]/input"));
+	senha.sendKeys(this.senha);
+	long inicio = System.currentTimeMillis();
+	wdw.until(ExpectedConditions.visibilityOf(driver.findElement(By.tagName("input"))));
+	driver.findElement(By.xpath("//*[@id='modalLogin']/div/div/div/div/div[1]/div/div[2]/form/button[2]")).click();
+	wdw.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//* [contains(@class,'toast-message')]"))));
+	long fim = System.currentTimeMillis();
+	long tempoDecorrido = fim - inicio;
+	long segundos = tempoDecorrido/1000;
+	
+	System.out.println("Login em segundos: "+segundos);
+	this.horizon.waitLoad();
+	
+	return ("Login efetuado!");
+}
+}
